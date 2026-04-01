@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from '@src/hooks/useRouter';
 import { useLocalSearchParams } from 'expo-router';
 import { Card, Badge, Avatar, ChannelBadge } from '@src/components';
@@ -69,7 +70,7 @@ export default function CustomerDetailScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton} activeOpacity={0.7}>
-            <Text style={styles.backText}>{'\u2190'}</Text>
+            <Ionicons name="chevron-back" size={22} color={colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Customer Profile</Text>
           <View style={styles.headerRight} />
@@ -109,21 +110,21 @@ export default function CustomerDetailScreen() {
         <Text style={styles.sectionTitle}>Contact Information</Text>
         <Card style={styles.infoCard}>
           <View style={styles.infoRow}>
-            <Text style={styles.infoIcon}>{'\u{1F4E7}'}</Text>
+            <Ionicons name="mail-outline" size={18} color={colors.text.secondary} style={styles.infoIcon} />
             <View>
               <Text style={styles.infoLabel}>Email</Text>
               <Text style={styles.infoValue}>{lead.email}</Text>
             </View>
           </View>
           <View style={styles.infoRow}>
-            <Text style={styles.infoIcon}>{'\u{1F4DE}'}</Text>
+            <Ionicons name="call-outline" size={18} color={colors.text.secondary} style={styles.infoIcon} />
             <View>
               <Text style={styles.infoLabel}>Phone</Text>
               <Text style={styles.infoValue}>{lead.phone}</Text>
             </View>
           </View>
           <View style={styles.infoRow}>
-            <Text style={styles.infoIcon}>{'\u{1F4C5}'}</Text>
+            <Ionicons name="calendar-outline" size={18} color={colors.text.secondary} style={styles.infoIcon} />
             <View>
               <Text style={styles.infoLabel}>Customer Since</Text>
               <Text style={styles.infoValue}>{formatDateTime(lead.createdAt)}</Text>
@@ -240,10 +241,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backText: {
-    fontSize: 18,
-    color: colors.text.primary,
-  },
   headerTitle: {
     ...typography.h4,
     color: colors.text.primary,
@@ -311,7 +308,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   infoIcon: {
-    fontSize: 18,
     marginRight: spacing.md,
     marginTop: 2,
   },

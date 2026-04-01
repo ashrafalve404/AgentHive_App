@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from '@src/hooks/useRouter';
 import { useLocalSearchParams } from 'expo-router';
 import { Card, Badge, Button, Avatar } from '@src/components';
@@ -15,6 +16,8 @@ import { colors, typography, spacing, borderRadius } from '@src/theme';
 import { formatDateTime, formatCurrency } from '@src/utils';
 import { bookingService } from '@src/services';
 import type { Booking } from '@src/types';
+
+type IconName = keyof typeof Ionicons.glyphMap;
 
 const statusVariant: Record<string, 'success' | 'warning' | 'error' | 'info' | 'default'> = {
   pending: 'warning',
@@ -24,12 +27,12 @@ const statusVariant: Record<string, 'success' | 'warning' | 'error' | 'info' | '
   cancelled: 'error',
 };
 
-const statusEmoji: Record<string, string> = {
-  pending: '\u{23F3}',
-  confirmed: '\u{2705}',
-  in_progress: '\u{1F69A}',
-  completed: '\u{2705}',
-  cancelled: '\u{274C}',
+const statusIcons: Record<string, IconName> = {
+  pending: 'time-outline',
+  confirmed: 'checkmark-circle-outline',
+  in_progress: 'car-outline',
+  completed: 'checkmark-done-circle-outline',
+  cancelled: 'close-circle-outline',
 };
 
 export default function BookingDetailScreen() {
@@ -69,7 +72,7 @@ export default function BookingDetailScreen() {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton} activeOpacity={0.7}>
-            <Text style={styles.backText}>{'\u2190'}</Text>
+            <Ionicons name="chevron-back" size={22} color={colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Booking Details</Text>
           <View style={styles.headerRight} />
@@ -113,14 +116,14 @@ export default function BookingDetailScreen() {
         <Text style={styles.sectionTitle}>Schedule</Text>
         <Card style={styles.infoCard}>
           <View style={styles.infoRow}>
-            <Text style={styles.infoIcon}>{'\u{1F4C5}'}</Text>
+            <Ionicons name="calendar-outline" size={18} color={colors.text.secondary} style={styles.infoIcon} />
             <View>
               <Text style={styles.infoLabel}>Date & Time</Text>
               <Text style={styles.infoValue}>{formatDateTime(booking.scheduledAt)}</Text>
             </View>
           </View>
           <View style={styles.infoRow}>
-            <Text style={styles.infoIcon}>{'\u{1F4CD}'}</Text>
+            <Ionicons name="location-outline" size={18} color={colors.text.secondary} style={styles.infoIcon} />
             <View style={styles.infoFlex}>
               <Text style={styles.infoLabel}>Address</Text>
               <Text style={styles.infoValue}>{booking.address}</Text>
@@ -151,9 +154,16 @@ export default function BookingDetailScreen() {
               </View>
               <View style={styles.timelineContent}>
                 <View style={styles.timelineRow}>
-                  <Text style={styles.timelineStatus}>
-                    {statusEmoji[entry.status] || '\u{25CF}'} {entry.status.replace('_', ' ')}
-                  </Text>
+                  <View style={styles.timelineStatusRow}>
+                    <Ionicons
+                      name={statusIcons[entry.status] || 'ellipse-outline'}
+                      size={14}
+                      color={colors.text.secondary}
+                    />
+                    <Text style={styles.timelineStatus}>
+                      {entry.status.replace('_', ' ')}
+                    </Text>
+                  </View>
                   <Text style={styles.timelineTime}>
                     {formatDateTime(entry.timestamp)}
                   </Text>
@@ -216,10 +226,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.primary,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  backText: {
-    fontSize: 18,
-    color: colors.text.primary,
   },
   headerTitle: {
     ...typography.h4,
@@ -305,7 +311,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   infoIcon: {
-    fontSize: 18,
     marginRight: spacing.md,
     marginTop: 2,
   },
@@ -382,6 +387,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+  },
+  timelineStatusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
   },
   timelineStatus: {
     ...typography.label,
