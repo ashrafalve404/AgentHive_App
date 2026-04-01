@@ -5,13 +5,15 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@src/*": [
+        "./src/*"
       ]
-    }
+    },
+    "baseUrl": "."
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "**/*.tsx"
   ]
 }
