@@ -42,11 +42,9 @@ export function StatCard({ label, value, change, changeType = 'neutral', icon, c
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    minWidth: '45%',
+    width: '48%',
     padding: 0,
     overflow: 'hidden',
-    marginBottom: spacing.md,
   },
   accentBar: {
     height: 3,

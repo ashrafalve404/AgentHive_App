@@ -7,10 +7,10 @@ import {
   Platform,
   ScrollView,
   TouchableOpacity,
-  Image,
 } from 'react-native';
-import { useRouter } from '@src/hooks/useRouter';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from '@src/hooks/useRouter';
 import { useAuthStore } from '@src/store';
 import { Button, Input } from '@src/components';
 import { colors, typography, spacing, borderRadius } from '@src/theme';
@@ -77,6 +77,7 @@ export default function LoginScreen() {
               error={errors.email}
               keyboardType="email-address"
               autoCapitalize="none"
+              leftIcon={<Ionicons name="mail-outline" size={18} color={colors.text.tertiary} />}
             />
 
             <Input
@@ -86,8 +87,13 @@ export default function LoginScreen() {
               onChangeText={setPassword}
               error={errors.password}
               secureTextEntry={!showPassword}
+              leftIcon={<Ionicons name="lock-closed-outline" size={18} color={colors.text.tertiary} />}
               rightIcon={
-                <Text style={styles.eyeIcon}>{showPassword ? '\u{1F441}' : '\u{1F441}'}</Text>
+                <Ionicons
+                  name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                  size={18}
+                  color={colors.text.tertiary}
+                />
               }
               onRightIconPress={() => setShowPassword(!showPassword)}
             />
@@ -118,7 +124,7 @@ export default function LoginScreen() {
 
             <View style={styles.socialRow}>
               <TouchableOpacity style={styles.socialButton} activeOpacity={0.7}>
-                <Text style={styles.socialIcon}>{'\u{1F4F1}'}</Text>
+                <Ionicons name="phone-portrait-outline" size={18} color={colors.text.primary} />
                 <Text style={styles.socialText}>Phone</Text>
               </TouchableOpacity>
             </View>
@@ -196,9 +202,6 @@ const styles = StyleSheet.create({
     color: colors.text.tertiary,
     marginBottom: spacing.xxl,
   },
-  eyeIcon: {
-    fontSize: 16,
-  },
   options: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -258,13 +261,10 @@ const styles = StyleSheet.create({
     borderColor: colors.border.default,
     backgroundColor: colors.background.primary,
   },
-  socialIcon: {
-    fontSize: 18,
-    marginRight: spacing.sm,
-  },
   socialText: {
     ...typography.label,
     color: colors.text.primary,
+    marginLeft: spacing.sm,
   },
   footer: {
     flexDirection: 'row',

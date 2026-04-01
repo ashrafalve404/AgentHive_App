@@ -331,7 +331,8 @@ const styles = StyleSheet.create({
   statsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: spacing.lg,
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.xxl,
     gap: spacing.md,
   },
   aiCard: {
